@@ -12,6 +12,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Website.Infrastructure;
 using Common;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace Website.Api
 {
@@ -24,12 +26,15 @@ namespace Website.Api
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddWebsiteInfrastructure(Configuration);
+			
 			services.AddControllers(options =>
 			{
 				options.Filters.Add<ExceptionsFilter>();
-			}).AddNewtonsoftJson();
+			}).AddNewtonsoftJson(options =>
+			{
+				options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
+			});
 			AddSwaggerService(services);
-			
 		}
 		public void Configure(IApplicationBuilder app)
 		{
@@ -50,6 +55,7 @@ namespace Website.Api
                 opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Website.Domain.xml"));
 				opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Common.xml"));
 			});
+			services.AddSwaggerGenNewtonsoftSupport();
 		}
 		private static void UseSwagger(IApplicationBuilder app)
 		{
