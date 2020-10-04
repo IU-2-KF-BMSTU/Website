@@ -4,20 +4,20 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Website.Domain.Abstractions.Repositories;
-using Website.Domain.Entities;
+using Website.Domain.Models;
 
 namespace Website.Api.Controllers
 {
 	/// <summary>
-	/// Представляет API для работы с медиа контентом.
+	/// Представляет API для работы с медиаконтентом.
 	/// </summary>
 	[Route("[controller]")]
 	[ApiController]
-	public class MediaContentController : ControllerBase
+	public class MediaContentsController : ControllerBase
 	{
 		private readonly IMediaContentRepository _mediaContentRepository;
 
-		public MediaContentController(IMediaContentRepository mediaContentRepository)
+		public MediaContentsController(IMediaContentRepository mediaContentRepository)
 		{
 			_mediaContentRepository = mediaContentRepository ?? throw new ArgumentNullException(nameof(mediaContentRepository));
 		}

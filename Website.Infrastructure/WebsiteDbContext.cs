@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Website.Domain.Entities;
-using Website.Infrastructure.EntityConfigurations;
+using Website.Infrastructure.Entities;
+using Website.Infrastructure.Entities.DepartmentTeacherRelations;
 
 namespace Website.Infrastructure
 {
@@ -15,22 +15,31 @@ namespace Website.Infrastructure
         }
 
         /// <summary>
-        /// Таблица студентов.
+        /// Таблица преподавателей.
         /// </summary>
-        public DbSet<Student> Students { get; set; }
+        public DbSet<TeacherEntity> Teachers { get; set; }
         /// <summary>
         /// Таблица вопросов.
         /// </summary>
-        public DbSet<Question> Questions { get; set; }
+        public DbSet<QuestionEntity> Questions { get; set; }
         /// <summary>
         /// Таблица медиаконтента.
         /// </summary>
-        public DbSet<MediaContent> MediaContents { get; set; }
+        public DbSet<MediaContentEntity> MediaContents { get; set; }
+        /// <summary>
+        /// Таблица кафедр.
+        /// </summary>
+        public DbSet<DepartmentEntity> Departments { get; set; }
+        /// <summary>
+        /// Таблица отношений преподавателя с кафедрами.
+        /// </summary>
+        public DbSet<DepartmentTeacherRelationEntity> DepartmentTeacherRelations{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+            modelBuilder.EnsureDataInitialization();
         }
-    }
+	}
 }

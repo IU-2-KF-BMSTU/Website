@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Website.Infrastructure;
+using Common;
 
 namespace Website.Api
 {
@@ -23,8 +24,12 @@ namespace Website.Api
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddWebsiteInfrastructure(Configuration);
-			services.AddControllers();
+			services.AddControllers(options =>
+			{
+				options.Filters.Add<ExceptionsFilter>();
+			}).AddNewtonsoftJson();
 			AddSwaggerService(services);
+			
 		}
 		public void Configure(IApplicationBuilder app)
 		{

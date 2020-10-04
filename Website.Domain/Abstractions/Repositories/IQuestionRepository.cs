@@ -1,7 +1,7 @@
 ﻿using Common;
 using System;
 using System.Threading.Tasks;
-using Website.Domain.Entities;
+using Website.Domain.Models;
 
 namespace Website.Domain.Abstractions.Repositories
 {

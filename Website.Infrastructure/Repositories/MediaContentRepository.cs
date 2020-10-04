@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Website.Domain.Abstractions.Repositories;
-using Website.Domain.Entities;
+using Website.Domain.Models;
+using Website.Infrastructure.Entities;
 
 namespace Website.Infrastructure.Repositories
 {
@@ -21,14 +21,32 @@ namespace Website.Infrastructure.Repositories
 		///<inheritdoc/>
 		public Task CreateMediaContent(MediaContent mediaContent)
 		{
-			_websiteDbContext.MediaContents.Add(mediaContent);
+			_websiteDbContext.MediaContents.Add(Convert(mediaContent));
 			return _websiteDbContext.SaveChangesAsync();
 		}
 
 		///<inheritdoc/>
 		public async Task<MediaContent> GetMediaContent(Guid id)
 		{
-			return await _websiteDbContext.MediaContents.FindAsync(id);
+			return Convert(await _websiteDbContext.MediaContents.FindAsync(id));
 		}
+
+		private MediaContent Convert(MediaContentEntity mediaContentEntity)
+		{
+			return new MediaContent
+			{
+				Id = mediaContentEntity.Id,
+				FileName = mediaContentEntity.FileName,
+				ContentType = mediaContentEntity.ContentType,
+				Content = mediaContentEntity.Content,
+			};
+		}
+		private MediaContentEntity Convert(MediaContent mediaContent) => new MediaContentEntity
+		{
+			Id = mediaContent.Id,
+			FileName = mediaContent.FileName,
+			ContentType = mediaContent.ContentType,
+			Content = mediaContent.Content,
+		};
 	}
 }

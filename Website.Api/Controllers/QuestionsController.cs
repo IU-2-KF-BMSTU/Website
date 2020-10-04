@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Website.Api.Models.Questions;
 using Website.Domain.Abstractions.Repositories;
-using Website.Domain.Entities;
+using Website.Domain.Models;
 
 namespace Website.Api.Controllers
 {
