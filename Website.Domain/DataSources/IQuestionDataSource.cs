@@ -1,32 +1,32 @@
 ﻿using Common;
 using System;
 using System.Threading.Tasks;
-using Website.Domain.Models;
+using Website.Domain.Entities;
 
-namespace Website.Domain.Abstractions.Repositories
+namespace Website.Domain.DataSources
 {
 	/// <summary>
-	/// Представляет репозиторий для работы с вопросами.
+	/// Представляет интерфейс источника данных сущности <see cref="Question"/>.
 	/// </summary>
-	public interface IQuestionRepository
+	public interface IQuestionDataSource
 	{
 		/// <summary>
 		/// Ассинхронно создаёт вопрос.
 		/// </summary>
 		/// <param name="question">Модель вопроса.</param>
-		public Task CreateQuestionAsync(Question question);
+		Task CreateQuestionAsync(Question question);
 		/// <summary>
 		/// Ассинхронно возвращает модель вопроса.
 		/// </summary>
-		/// <param name="questionId">Идентификатор вопроса.</param>
+		/// <param name="id">Идентификатор вопроса.</param>
 		/// <returns>Модель вопроса.</returns>
-		public Task<Question> GetQuestionAsync(Guid questionId);
+		Task<Question> GetQuestionAsync(Guid id);
 		/// <summary>
 		/// Ассинхронно возвращает вопросы.
 		/// </summary>
 		/// <param name="offset">Количество пропускаемых элементов.</param>
 		/// <param name="count">Количество выгружаемых элементов.</param>
 		/// <returns>Вопросы</returns>
-		public Task<CollectionResult<Question>> GetQuestionsAsync(int offset, int count);
+		Task<CollectionResult<Question>> GetQuestionsAsync(int offset, int count);
 	}
 }

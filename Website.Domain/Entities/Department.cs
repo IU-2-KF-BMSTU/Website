@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace Website.Domain.Models
+namespace Website.Domain.Entities
 {
 	/// <summary>
-	/// Представляет модель кафедры.
+	/// Представляет сущность кафедры.
 	/// </summary>
 	public class Department
 	{
@@ -19,5 +20,13 @@ namespace Website.Domain.Models
 		/// Описание.
 		/// </summary>
 		public string Description { get; set; }
+		/// <summary>
+		/// Заведующий кафедрой.
+		/// </summary>
+		public DepartmentHead Head { get; set; }
+		/// <summary>
+		/// Преподаватели.
+		/// </summary>
+		public ICollection<Teacher> Teachers { get; set; }
 	}
 }
