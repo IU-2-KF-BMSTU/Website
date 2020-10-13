@@ -6,7 +6,7 @@ using Website.Domain.Entities;
 namespace Website.Domain.DataSources
 {
 	/// <summary>
-	/// Представляет интерфейс источника данных сущности <see cref="Question"/>.
+	/// Представляет источник данных сущности <see cref="Question"/>.
 	/// </summary>
 	public interface IQuestionDataSource
 	{

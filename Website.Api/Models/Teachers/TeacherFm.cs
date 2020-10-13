@@ -1,5 +1,5 @@
 ﻿using System;
-using Website.Domain.Models.Enums;
+using Website.Domain.Entities.Enums;
 
 namespace Website.Api.Models.Teachers
 {

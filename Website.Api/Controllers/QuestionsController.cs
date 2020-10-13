@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Website.Api.Models.Questions;
-using Website.Domain.Abstractions.Repositories;
-using Website.Domain.Models;
+using Website.Domain.DataSources;
+using Website.Domain.Entities;
+using Website.Infrastructure;
 
 namespace Website.Api.Controllers
 {
@@ -15,11 +16,13 @@ namespace Website.Api.Controllers
 	[ApiController]
 	public class QuestionsController : ControllerBase
 	{
-		private readonly IQuestionRepository _questionRepository;
+		private readonly IQuestionDataSource _questionRepository;
+		private readonly WebsiteDbContext _websiteDbContext;
 
-		public QuestionsController(IQuestionRepository questionRepository)
+		public QuestionsController(IQuestionDataSource questionRepository, WebsiteDbContext websiteDbContext)
 		{
 			_questionRepository = questionRepository ?? throw new ArgumentNullException(nameof(questionRepository));
+			_websiteDbContext = websiteDbContext ?? throw new ArgumentNullException(nameof(websiteDbContext));
 		}
 
 		/// <summary>
@@ -42,7 +45,8 @@ namespace Website.Api.Controllers
 				QuestionerName = questionFm.QuestionerName,
 				Content = questionFm.Content
 			};
-			return _questionRepository.CreateQuestionAsync(question);
+			_questionRepository.CreateQuestionAsync(question);
+			return _websiteDbContext.SaveChangesAsync();
 		}
 		/// <summary>
 		/// Возвращает модель вопроса.

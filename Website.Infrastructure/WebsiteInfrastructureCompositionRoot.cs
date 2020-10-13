@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Website.Domain.Abstractions.Repositories;
-using Website.Infrastructure.Repositories;
+using Website.Domain.DataSources;
+using Website.Infrastructure.DataSources;
 
 namespace Website.Infrastructure
 {
@@ -24,7 +24,7 @@ namespace Website.Infrastructure
 
 		static private void AddRepositories(this IServiceCollection serviceCollection)
 		{
-			serviceCollection.AddScoped<IQuestionRepository, QuestionRepository>();
+			serviceCollection.AddScoped<IQuestionDataSource, QuestionDataSource>();
 		}
 		static private void AddDatabase(this IServiceCollection serviceCollection, IConfiguration configuration)
 		{

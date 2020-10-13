@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Website.Domain.Abstractions.Repositories;
-using Website.Domain.Models;
+using Website.Domain.DataSources;
+using Website.Domain.Entities;
 
 namespace Website.Api.Controllers
 {
@@ -15,11 +15,11 @@ namespace Website.Api.Controllers
 	[ApiController]
 	public class MediaContentsController : ControllerBase
 	{
-		private readonly IMediaContentRepository _mediaContentRepository;
+		private readonly IMediaContentDataSource _mediaContentDataSource;
 
-		public MediaContentsController(IMediaContentRepository mediaContentRepository)
+		public MediaContentsController(IMediaContentDataSource mediaContentDataSource)
 		{
-			_mediaContentRepository = mediaContentRepository ?? throw new ArgumentNullException(nameof(mediaContentRepository));
+			_mediaContentDataSource = mediaContentDataSource ?? throw new ArgumentNullException(nameof(mediaContentDataSource));
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace Website.Api.Controllers
 				ContentType = formFile.ContentType,
 				Content = buffer
 			};
-			await _mediaContentRepository.CreateMediaContent(mediaContent);
+			await _mediaContentDataSource.CreateMediaContentAsync(mediaContent);
 			return mediaContent.Id;
 		}
 		/// <summary>
@@ -59,7 +59,7 @@ namespace Website.Api.Controllers
 		[HttpGet("Content")]
 		public async Task<FileContentResult> GetContent(Guid id)
 		{
-			MediaContent mediaContent = await _mediaContentRepository.GetMediaContent(id);
+			MediaContent mediaContent = await _mediaContentDataSource.GetMediaContentAsync(id);
 			return new FileContentResult(mediaContent.Content, mediaContent.ContentType);
 		}
 		/// <summary>
@@ -70,7 +70,7 @@ namespace Website.Api.Controllers
 		[HttpGet("File")]
 		public async Task<FileContentResult> GetFile(Guid id)
 		{
-			MediaContent mediaContent = await _mediaContentRepository.GetMediaContent(id);
+			MediaContent mediaContent = await _mediaContentDataSource.GetMediaContentAsync(id);
 			return File(mediaContent.Content, mediaContent.ContentType, mediaContent.FileName);
 		}
 	}

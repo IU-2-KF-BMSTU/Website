@@ -1,44 +1,38 @@
 ﻿using Common;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Website.Domain.DataSources;
 using Website.Domain.Entities;
+using Website.Infrastructure.Extensions;
 
 namespace Website.Infrastructure.DataSources
 {
-	internal class BaseDataSource<TEntity, TDbContext>
-		where TEntity : class
-		where TDbContext : DbContext 
+	internal class QuestionDataSource : IQuestionDataSource
 	{
-		public BaseDataSource(TDbContext dbContext, DbSet<TEntity> dbSet)
-		{
-			DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-			DbSet = dbSet;
-		}
+		private readonly WebsiteDbContext _websiteDbContext;
 
-		protected TDbContext DbContext { get; private set; }
-		protected DbSet<TEntity> DbSet { get; private set; }
-
-		public void Add(TEntity entity)
+		public QuestionDataSource(WebsiteDbContext websiteDbContext)
 		{
-			DbSet.Add(entity);
+			_websiteDbContext = websiteDbContext ?? throw new ArgumentNullException(nameof(websiteDbContext));
 		}
-		public void Remove(TEntity entity)
-		{
-			DbSet.Remove(entity);
-		}
-
-	}
-	internal class QuestionDataSource : BaseDataSource<Question, WebsiteDbContext>, IQuestionDataSource
-	{
-		public QuestionDataSource(WebsiteDbContext dbContext) : base(dbContext, dbContext.Questions) { }
 
 		public Task CreateQuestionAsync(Question question)
 		{
-			Add(question);
+			return Task.FromResult(_websiteDbContext.Questions.Add(question));
 		}
-		public Task<Question> GetQuestionAsync(Guid id) => throw new NotImplementedException();
-		public Task<CollectionResult<Question>> GetQuestionsAsync(int offset, int count) => throw new NotImplementedException();
+		public async Task<Question> GetQuestionAsync(Guid id)
+		{
+			return await _websiteDbContext.Questions.FindAsync(id);
+		}
+		public async Task<CollectionResult<Question>> GetQuestionsAsync(int offset, int count)
+		{
+			int totalCount = await _websiteDbContext.Questions.CountAsync();
+			Question[] questions = await _websiteDbContext.Questions.OrderByDescending(x => x.Date)
+																	.ApplyPagingOption(offset, count)
+																	.ToArrayAsync();
+			return new CollectionResult<Question>(totalCount, questions);
+		}
 	}
 }

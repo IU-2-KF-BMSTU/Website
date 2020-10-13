@@ -23,7 +23,7 @@ namespace Website.Domain.Entities
 		/// <summary>
 		/// Заведующий кафедрой.
 		/// </summary>
-		public DepartmentHead Head { get; set; }
+		public Teacher Head { get; set; }
 		/// <summary>
 		/// Преподаватели.
 		/// </summary>

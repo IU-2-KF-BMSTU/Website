@@ -1,4 +1,5 @@
-﻿using Website.Domain.Entities.Enums;
+﻿using System;
+using Website.Domain.Entities.Enums;
 
 namespace Website.Domain.Entities
 {
@@ -15,5 +16,13 @@ namespace Website.Domain.Entities
 		/// Тип преподавания.
 		/// </summary>
 		public TeachingType TeachingType { get; set; }
+		/// <summary>
+		/// Идентификатор кафедры.
+		/// </summary>
+		public Guid? DepartmentId { get; set; }
+		/// <summary>
+		/// Кафедра.
+		/// </summary>
+		public Department Department { get; set; }
 	}
 }

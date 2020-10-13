@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Website.Domain;
-using Website.Domain.Abstractions.Repositories;
-using Website.Domain.Models;
-using Website.Domain.Models.Enums;
+using Website.Domain.DataSources;
+using Website.Domain.Entities;
+using Website.Domain.Entities.Enums;
+using Website.Infrastructure;
 
 namespace Website.Api.Controllers
 {
@@ -16,15 +17,13 @@ namespace Website.Api.Controllers
 	[ApiController]
 	public class DepartmentsController : ControllerBase
 	{
-		private readonly IDepartmentRepository _departmentRepository;
-		private readonly ITeacherRepository _teacherRepository;
+		private readonly IDepartmentDataSource _departmentDataSource;
 
-		public DepartmentsController(IDepartmentRepository departmentRepository, ITeacherRepository teacherRepository)
+		public DepartmentsController(IDepartmentDataSource departmentDataSource)
 		{
-			_departmentRepository = departmentRepository ?? throw new ArgumentNullException(nameof(departmentRepository));
-			_teacherRepository = teacherRepository ?? throw new ArgumentNullException(nameof(teacherRepository));
+			_departmentDataSource = departmentDataSource ?? throw new ArgumentNullException(nameof(departmentDataSource));
 		}
-		
+
 		/// <summary>
 		/// Возвращает список преподавателей.
 		/// </summary>
@@ -33,7 +32,7 @@ namespace Website.Api.Controllers
 		[HttpGet("Teachers")]
 		public Task<IEnumerable<Teacher>> GetTeachers(TeachingType? teachingType)
 		{
-			return _departmentRepository.GetTeachers(CodeSystem.Iu2DepartmentId, teachingType);
+			return _departmentDataSource.GetTeachersAsync(CodeSystem.Iu2DepartmentId, teachingType);
 		}
 		/// <summary>
 		/// Возвращает заведующего кафедрой.
@@ -42,7 +41,7 @@ namespace Website.Api.Controllers
 		[HttpGet("Head")]
 		public Task<Teacher> GetHead()
 		{
-			return _departmentRepository.GetHead(CodeSystem.Iu2DepartmentId);
+			return _departmentDataSource.GetHeadAsync(CodeSystem.Iu2DepartmentId);
 		}
 		/// <summary>
 		/// Возвращает информацию о кафедре.
@@ -51,7 +50,7 @@ namespace Website.Api.Controllers
 		[HttpGet]
 		public Task<Department> GetDepartment()
 		{
-			return _departmentRepository.GetDepartment(CodeSystem.Iu2DepartmentId);
+			return _departmentDataSource.GetDepartmentAsync(CodeSystem.Iu2DepartmentId);
 		}
 	}
 }
