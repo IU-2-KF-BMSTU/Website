@@ -1,4 +1,4 @@
-﻿namespace Website.Domain.Models.Enums
+﻿namespace Website.Domain.Entities.Enums
 {
 	/// <summary>
 	/// Представляет тип преподавания.

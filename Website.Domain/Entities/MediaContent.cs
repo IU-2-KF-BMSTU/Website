@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Website.Domain.Models
+namespace Website.Domain.Entities
 {
 	/// <summary>
-	/// Представляет модель медиаконтента.
+	/// Представляет сущность медиаконтента.
 	/// </summary>
 	public class MediaContent
 	{

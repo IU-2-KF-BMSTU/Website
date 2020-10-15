@@ -33,6 +33,7 @@ namespace Website.Api
 			}).AddNewtonsoftJson(options =>
 			{
 				options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
+				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 			});
 			AddSwaggerService(services);
 		}

@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Website.Domain.Models
+namespace Website.Domain.Entities
 {
 	/// <summary>
-	/// Представляет модель преподавателя.
+	/// Представляет сущность личности.
 	/// </summary>
-	public class Teacher
+	public class Person
 	{
 		/// <summary>
 		/// Идентификатор.
@@ -24,16 +24,12 @@ namespace Website.Domain.Models
 		/// </summary>
 		public string Patronymic { get; set; }
 		/// <summary>
-		/// Научная степень.
+		/// Идентификатор изображения.
 		/// </summary>
-		public string Degree { get; set; }
+		public Guid? PictureId { get; set; }
 		/// <summary>
 		/// Дополнительная информация.
 		/// </summary>
 		public string AdditionalInfo { get; set; }
-		/// <summary>
-		/// Идентификатор изображения.
-		/// </summary>
-		public Guid? PictureId { get; set; }
 	}
 }

@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Website.Api.Models.Questions;
-using Website.Domain.Abstractions.Repositories;
-using Website.Domain.Models;
+using Website.Domain.DataSources;
+using Website.Domain.Entities;
+using Website.Infrastructure;
 
 namespace Website.Api.Controllers
 {
@@ -15,11 +16,13 @@ namespace Website.Api.Controllers
 	[ApiController]
 	public class QuestionsController : ControllerBase
 	{
-		private readonly IQuestionRepository _questionRepository;
+		private readonly IQuestionDataSource _questionRepository;
+		private readonly WebsiteDbContext _websiteDbContext;
 
-		public QuestionsController(IQuestionRepository questionRepository)
+		public QuestionsController(IQuestionDataSource questionRepository, WebsiteDbContext websiteDbContext)
 		{
 			_questionRepository = questionRepository ?? throw new ArgumentNullException(nameof(questionRepository));
+			_websiteDbContext = websiteDbContext ?? throw new ArgumentNullException(nameof(websiteDbContext));
 		}
 
 		/// <summary>
@@ -42,7 +45,8 @@ namespace Website.Api.Controllers
 				QuestionerName = questionFm.QuestionerName,
 				Content = questionFm.Content
 			};
-			return _questionRepository.CreateQuestionAsync(question);
+			_questionRepository.Add(question);
+			return _websiteDbContext.SaveChangesAsync();
 		}
 		/// <summary>
 		/// Возвращает модель вопроса.
@@ -50,7 +54,7 @@ namespace Website.Api.Controllers
 		/// <param name="questionId">Идентификатор вопроса.</param>
 		/// <returns>Модель вопроса.</returns>
 		[HttpGet("{questionId}")]
-		public Task<Question> GetQuestion(Guid questionId) => _questionRepository.GetQuestionAsync(questionId);
+		public Task<Question> GetQuestion(Guid questionId) => _questionRepository.FindAsync(questionId);
 		/// <summary>
 		/// Возвращает вопросы.
 		/// </summary>
@@ -65,7 +69,7 @@ namespace Website.Api.Controllers
 			if (count < 0)
 				throw new ArgumentOutOfRangeException(nameof(count));
 
-			return _questionRepository.GetQuestionsAsync((page - 1) * count, count);
+			return _questionRepository.FindAsync((page - 1) * count, count);
 		}
 	}
 }

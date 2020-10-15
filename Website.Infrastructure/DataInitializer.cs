@@ -1,93 +1,61 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Website.Domain;
-using Website.Domain.Models.Enums;
-using Website.Infrastructure.Entities;
-using Website.Infrastructure.Entities.DepartmentTeacherRelations;
+using Website.Domain.Entities;
 
 namespace Website.Infrastructure
 {
-	static public class DataInitializer
+	/// <summary>
+	/// Представляет инициализатор данных.
+	/// </summary>
+	public class DataInitializer
 	{
-		static public void EnsureDataInitialization(this ModelBuilder modelBuilder)
+		/// <summary>
+		/// Обеспечивает базовую инициализацию данных.
+		/// </summary>
+		/// <param name="modelBuilder"></param>
+		public void EnsureDataInitialization(ModelBuilder modelBuilder)
 		{
-			DepartmentEntity iu2Department = GetDepartment();
-			TeacherEntity departmentHead = GetDepartmentHead();
-			TeacherEntity[] teachers = GetTeachers();
-
-			DepartmentTeacherRelationEntity[] departmentTeacherRelations = new DepartmentTeacherRelationEntity[teachers.Length];
-			for (int i = 0; i < teachers.Length; i++)
-			{
-				departmentTeacherRelations[i] = new DepartmentTeacherRelationEntity
-				{
-					Id = Guid.NewGuid(),
-					DepartmentId = iu2Department.Id,
-					TeacherId = teachers[i].Id,
-					TeachingType = TeachingType.Regular
-				};
-			}
-			DepartmentTeacherRelationEntity departmentHeadRelation = new DepartmentTeacherRelationEntity
-			{
-				Id = Guid.NewGuid(),
-				DepartmentId = iu2Department.Id,
-				TeacherId = departmentHead.Id,
-				TeachingType = TeachingType.Regular,
-				IsDepartmentHead = true
-			};
-
-			List<TeacherEntity> allTeachers = teachers.ToList();
-			allTeachers.Add(departmentHead);
-			modelBuilder.Entity<TeacherEntity>().HasData(allTeachers);
-
-			List<DepartmentTeacherRelationEntity> alldepartmentTeacherRelations = departmentTeacherRelations.ToList();
-			alldepartmentTeacherRelations.Add(departmentHeadRelation);
-			modelBuilder.Entity<DepartmentTeacherRelationEntity>().HasData(alldepartmentTeacherRelations);
-
-			modelBuilder.Entity<DepartmentEntity>().HasData(new DepartmentEntity[] { iu2Department });
+			modelBuilder.Entity<Department>().HasData(InitializeDepartment());
+			modelBuilder.Entity<Teacher>().HasData(InitializeTeachers());
 		}
 
-		static private DepartmentEntity GetDepartment()
+		private Department InitializeDepartment() => new Department
 		{
-			return new DepartmentEntity
-			{
-				Id = CodeSystem.Iu2DepartmentId,
-				Name = "ИУ-2 КФ",
-			};
-		}
-		static private TeacherEntity GetDepartmentHead()
+			Id = CodeSystem.Iu2DepartmentId,
+			Name = "ИУ-2 КФ",
+			Description = "Описание кафедры"
+		};
+		private Teacher[] InitializeTeachers() => new Teacher[]
 		{
-			return new TeacherEntity
+			new Teacher
 			{
 				Id = Guid.NewGuid(),
 				Name = "Игорь",
 				Surname = "Чухраев",
 				Patronymic = "Владимирович",
-				Degree = "кандидат технических наук, доцент"
-			};
-		}
-		static private TeacherEntity[] GetTeachers()
-		{
-			return new TeacherEntity[]
+				Degree = "кандидат технических наук, доцент",
+				IsDepartmentHead = true,
+				DepartmentId = CodeSystem.Iu2DepartmentId
+			},
+			new Teacher
 			{
-				new TeacherEntity
-				{
-					Id = Guid.NewGuid(),
-					Name = "Борсук",
-					Surname = "Наталья",
-					Patronymic = "Александровна",
-					Degree = "кандидат технических наук, доцент"
-				},
-				new TeacherEntity
-				{
-					Id = Guid.NewGuid(),
-					Name = "Дерюгина",
-					Surname = "Елена",
-					Patronymic = "Олеговна",
-					Degree = "кандидат технических наук, доцент"
-				},
-			};
-		}
+				Id = Guid.NewGuid(),
+				Name = "Борсук",
+				Surname = "Наталья",
+				Patronymic = "Александровна",
+				Degree = "кандидат технических наук, доцент",
+				DepartmentId = CodeSystem.Iu2DepartmentId
+			},
+			new Teacher
+			{
+				Id = Guid.NewGuid(),
+				Name = "Дерюгина",
+				Surname = "Елена",
+				Patronymic = "Олеговна",
+				Degree = "кандидат технических наук, доцент",
+				DepartmentId = CodeSystem.Iu2DepartmentId
+			},
+		};
 	}
 }

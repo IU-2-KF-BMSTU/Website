@@ -3,8 +3,10 @@ using System;
 using System.Threading.Tasks;
 using Website.Api.Models.Teachers;
 using Website.Domain;
-using Website.Domain.Abstractions.Repositories;
-using Website.Domain.Models;
+using Website.Domain.DataSources.Departments;
+using Website.Domain.DataSources.Teachers;
+using Website.Domain.Entities;
+using Website.Infrastructure;
 
 namespace Website.Api.Controllers
 {
@@ -15,13 +17,13 @@ namespace Website.Api.Controllers
 	[ApiController]
 	public class TeachersController : ControllerBase
 	{
-		private readonly IDepartmentRepository _departmentRepository;
-		private readonly ITeacherRepository _teacherRepository;
+		private readonly ITeacherDataSource _teacherDataSource;
+		private readonly WebsiteDbContext _websiteDbContext;
 
-		public TeachersController(IDepartmentRepository departmentRepository, ITeacherRepository teacherRepository)
+		public TeachersController(IDepartmentDataSource departmentDataSource, ITeacherDataSource teacherDataSource, WebsiteDbContext websiteDbContext)
 		{
-			_departmentRepository = departmentRepository ?? throw new ArgumentNullException(nameof(departmentRepository));
-			_teacherRepository = teacherRepository ?? throw new ArgumentNullException(nameof(teacherRepository));
+			_teacherDataSource = teacherDataSource ?? throw new ArgumentNullException(nameof(teacherDataSource));
+			_websiteDbContext = websiteDbContext ?? throw new ArgumentNullException(nameof(websiteDbContext));
 		}
 
 		/// <summary>
@@ -41,15 +43,10 @@ namespace Website.Api.Controllers
 				Degree = teacherFm.Degree,
 				AdditionalInfo = teacherFm.AdditionalInfo,
 				PictureId = teacherFm.PictureId,
+				DepartmentId = CodeSystem.Iu2DepartmentId
 			};
-			DepartmentTeacherRelation departmentTeacherRelation = new DepartmentTeacherRelation
-			{
-				Id = Guid.NewGuid(),
-				TeachingType = teacherFm.TeachingType,
-				IsDepartmentHead = false
-			};
-			await _teacherRepository.CreateTeacher(teacher);
-			await _departmentRepository.AddTeacher(CodeSystem.Iu2DepartmentId, teacher.Id, departmentTeacherRelation);
+			_teacherDataSource.Add(teacher);
+			await _websiteDbContext.SaveChangesAsync();
 			return teacher.Id;
 		}
 		/// <summary>
@@ -69,7 +66,8 @@ namespace Website.Api.Controllers
 				AdditionalInfo = teacherVm.AdditionalInfo,
 				PictureId = teacherVm.PictureId,
 			};
-			return _teacherRepository.UpdateTeacher(teacher);
+			_teacherDataSource.Update(teacher);
+			return _websiteDbContext.SaveChangesAsync();
 		}
 		/// <summary>
 		/// Удаляет преподавателя.
@@ -78,7 +76,8 @@ namespace Website.Api.Controllers
 		[HttpDelete("{id}")]
 		public Task DeleteTeacher(Guid id)
 		{
-			return _teacherRepository.DeleteTeacher(id);
+			_teacherDataSource.Remove(id);
+			return _websiteDbContext.SaveChangesAsync();
 		}
 		/// <summary>
 		/// Возвращает преподавателя.
@@ -87,7 +86,7 @@ namespace Website.Api.Controllers
 		[HttpGet("{id}")]
 		public Task<Teacher> GetTeacher(Guid id)
 		{
-			return _teacherRepository.GetTeacher(id);
+			return _teacherDataSource.FindAsync(id);
 		}
 	}
 }

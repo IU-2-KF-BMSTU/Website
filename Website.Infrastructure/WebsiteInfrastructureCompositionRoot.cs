@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Website.Domain.Abstractions.Repositories;
-using Website.Infrastructure.Repositories;
+using Website.Domain.DataSources;
+using Website.Domain.DataSources.Departments;
+using Website.Domain.DataSources.Teachers;
+using Website.Infrastructure.DataSources;
 
 namespace Website.Infrastructure
 {
@@ -24,10 +26,10 @@ namespace Website.Infrastructure
 
 		static private void AddRepositories(this IServiceCollection serviceCollection)
 		{
-			serviceCollection.AddScoped<IQuestionRepository, QuestionRepository>();
-			serviceCollection.AddScoped<IMediaContentRepository, MediaContentRepository>();
-			serviceCollection.AddScoped<ITeacherRepository, TeacherRepository>();
-			serviceCollection.AddScoped<IDepartmentRepository, DepartmentRepository>();
+			serviceCollection.AddScoped<IDepartmentDataSource, DepartmentDataSource>();
+			serviceCollection.AddScoped<IMediaContentDataSource, MediaContentDataSource>();
+			serviceCollection.AddScoped<IQuestionDataSource, QuestionDataSource>();
+			serviceCollection.AddScoped<ITeacherDataSource, TeacherDataSource>();
 		}
 		static private void AddDatabase(this IServiceCollection serviceCollection, IConfiguration configuration)
 		{
