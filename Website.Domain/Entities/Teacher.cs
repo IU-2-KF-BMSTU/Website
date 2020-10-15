@@ -24,5 +24,9 @@ namespace Website.Domain.Entities
 		/// Кафедра.
 		/// </summary>
 		public Department Department { get; set; }
+		/// <summary>
+		/// Является ли преподаватель заведующим кафедрой.
+		/// </summary>
+		public bool IsDepartmentHead { get; set; }
 	}
 }

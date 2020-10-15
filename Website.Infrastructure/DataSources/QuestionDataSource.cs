@@ -9,6 +9,7 @@ using Website.Infrastructure.Extensions;
 
 namespace Website.Infrastructure.DataSources
 {
+	///<inheritdoc/>
 	internal class QuestionDataSource : IQuestionDataSource
 	{
 		private readonly WebsiteDbContext _websiteDbContext;
@@ -18,15 +19,18 @@ namespace Website.Infrastructure.DataSources
 			_websiteDbContext = websiteDbContext ?? throw new ArgumentNullException(nameof(websiteDbContext));
 		}
 
-		public Task CreateQuestionAsync(Question question)
+		///<inheritdoc/>
+		public void Add(Question question)
 		{
-			return Task.FromResult(_websiteDbContext.Questions.Add(question));
+			_websiteDbContext.Questions.Add(question);
 		}
-		public async Task<Question> GetQuestionAsync(Guid id)
+		///<inheritdoc/>
+		public async Task<Question> FindAsync(Guid id)
 		{
 			return await _websiteDbContext.Questions.FindAsync(id);
 		}
-		public async Task<CollectionResult<Question>> GetQuestionsAsync(int offset, int count)
+		///<inheritdoc/>
+		public async Task<CollectionResult<Question>> FindAsync(int offset, int count)
 		{
 			int totalCount = await _websiteDbContext.Questions.CountAsync();
 			Question[] questions = await _websiteDbContext.Questions.OrderByDescending(x => x.Date)

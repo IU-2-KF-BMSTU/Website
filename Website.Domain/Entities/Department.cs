@@ -21,10 +21,6 @@ namespace Website.Domain.Entities
 		/// </summary>
 		public string Description { get; set; }
 		/// <summary>
-		/// Заведующий кафедрой.
-		/// </summary>
-		public Teacher Head { get; set; }
-		/// <summary>
 		/// Преподаватели.
 		/// </summary>
 		public ICollection<Teacher> Teachers { get; set; }

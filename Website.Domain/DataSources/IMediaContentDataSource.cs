@@ -10,15 +10,15 @@ namespace Website.Domain.DataSources
 	public interface IMediaContentDataSource
 	{
 		/// <summary>
-		/// Ассинхронно создаёт медиаконтент.
+		/// Cоздаёт медиаконтент.
 		/// </summary>
 		/// <param name="mediaContent">Модель медиаконтента.</param>
-		public Task CreateMediaContentAsync(MediaContent mediaContent);
+		public void Add(MediaContent mediaContent);
 		/// <summary>
 		/// Ассинхронно возвращает медиаконтент.
 		/// </summary>
 		/// <param name="id">Идентификатор.</param>
 		/// <returns>Медиаконтент.</returns>
-		public Task<MediaContent> GetMediaContentAsync(Guid id);
+		public Task<MediaContent> FindAsync(Guid id);
 	}
 }

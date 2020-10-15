@@ -3,7 +3,8 @@ using System;
 using System.Threading.Tasks;
 using Website.Api.Models.Teachers;
 using Website.Domain;
-using Website.Domain.DataSources;
+using Website.Domain.DataSources.Departments;
+using Website.Domain.DataSources.Teachers;
 using Website.Domain.Entities;
 using Website.Infrastructure;
 
@@ -16,13 +17,11 @@ namespace Website.Api.Controllers
 	[ApiController]
 	public class TeachersController : ControllerBase
 	{
-		private readonly IDepartmentDataSource _departmentDataSource;
 		private readonly ITeacherDataSource _teacherDataSource;
 		private readonly WebsiteDbContext _websiteDbContext;
 
 		public TeachersController(IDepartmentDataSource departmentDataSource, ITeacherDataSource teacherDataSource, WebsiteDbContext websiteDbContext)
 		{
-			_departmentDataSource = departmentDataSource ?? throw new ArgumentNullException(nameof(departmentDataSource));
 			_teacherDataSource = teacherDataSource ?? throw new ArgumentNullException(nameof(teacherDataSource));
 			_websiteDbContext = websiteDbContext ?? throw new ArgumentNullException(nameof(websiteDbContext));
 		}
@@ -43,10 +42,10 @@ namespace Website.Api.Controllers
 				Patronymic = teacherFm.Patronymic,
 				Degree = teacherFm.Degree,
 				AdditionalInfo = teacherFm.AdditionalInfo,
-				PictureId = teacherFm.PictureId
+				PictureId = teacherFm.PictureId,
+				DepartmentId = CodeSystem.Iu2DepartmentId
 			};
-			await _teacherDataSource.CreateTeacherAsync(teacher);
-			await _departmentDataSource.AddTeacherAsync(CodeSystem.Iu2DepartmentId, teacher);
+			_teacherDataSource.Add(teacher);
 			await _websiteDbContext.SaveChangesAsync();
 			return teacher.Id;
 		}
@@ -67,7 +66,8 @@ namespace Website.Api.Controllers
 				AdditionalInfo = teacherVm.AdditionalInfo,
 				PictureId = teacherVm.PictureId,
 			};
-			return _teacherDataSource.UpdateTeacherAsync(teacher);
+			_teacherDataSource.Update(teacher);
+			return _websiteDbContext.SaveChangesAsync();
 		}
 		/// <summary>
 		/// Удаляет преподавателя.
@@ -76,7 +76,8 @@ namespace Website.Api.Controllers
 		[HttpDelete("{id}")]
 		public Task DeleteTeacher(Guid id)
 		{
-			return _teacherDataSource.DeleteTeacherAsync(id);
+			_teacherDataSource.Remove(id);
+			return _websiteDbContext.SaveChangesAsync();
 		}
 		/// <summary>
 		/// Возвращает преподавателя.
@@ -85,7 +86,7 @@ namespace Website.Api.Controllers
 		[HttpGet("{id}")]
 		public Task<Teacher> GetTeacher(Guid id)
 		{
-			return _teacherDataSource.GetTeacherAsync(id);
+			return _teacherDataSource.FindAsync(id);
 		}
 	}
 }

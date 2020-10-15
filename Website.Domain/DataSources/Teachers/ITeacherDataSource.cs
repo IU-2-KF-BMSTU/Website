@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Website.Domain.DataSources.Teachers.Filters;
 using Website.Domain.Entities;
 
-namespace Website.Domain.DataSources
+namespace Website.Domain.DataSources.Teachers
 {
 	/// <summary>
 	/// Представляет источник данных сущности <see cref="Teacher"/>.
@@ -10,25 +12,31 @@ namespace Website.Domain.DataSources
 	public interface ITeacherDataSource
 	{
 		/// <summary>
-		/// Ассинхронно создаёт преподавателя.
+		/// Cоздаёт преподавателя.
 		/// </summary>
 		/// <param name="teacher">Модель преподавателя.</param>
-		public Task CreateTeacherAsync(Teacher teacher);
+		public void Add(Teacher teacher);
 		/// <summary>
-		/// Ассинхронно обновляет преподавателя.
+		/// Обновляет преподавателя.
 		/// </summary>
 		/// <param name="teacher">Модель преподавателя.</param>
-		public Task UpdateTeacherAsync(Teacher teacher);
+		public void Update(Teacher teacher);
 		/// <summary>
 		/// Ассинхронно возвращает преподавателя.
 		/// </summary>
 		/// <param name="id">Идентификатор преподавателя.</param>
 		/// <returns>Преподаватель.</returns>
-		public Task<Teacher> GetTeacherAsync(Guid id);
+		public Task<Teacher> FindAsync(Guid id);
 		/// <summary>
-		/// Ассинхронно удаляет преподавателя.
+		/// Асинхронно возвращает преподавателей.
+		/// </summary>
+		/// <param name="filterSettings">Настройки фильтрации.</param>
+		/// <returns>Преподаватели.</returns>
+		public Task<IEnumerable<Teacher>> FindAsync(TeacherFilterSettings filterSettings);
+		/// <summary>
+		/// Удаляет преподавателя.
 		/// </summary>
 		/// <param name="id">Идентификатор преподавателя.</param>
-		public Task DeleteTeacherAsync(Guid id);
+		public void Remove(Guid id);
 	}
 }

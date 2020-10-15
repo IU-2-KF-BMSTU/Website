@@ -11,22 +11,22 @@ namespace Website.Domain.DataSources
 	public interface IQuestionDataSource
 	{
 		/// <summary>
-		/// Ассинхронно создаёт вопрос.
+		/// Cоздаёт вопрос.
 		/// </summary>
 		/// <param name="question">Модель вопроса.</param>
-		Task CreateQuestionAsync(Question question);
+		void Add(Question question);
 		/// <summary>
 		/// Ассинхронно возвращает модель вопроса.
 		/// </summary>
 		/// <param name="id">Идентификатор вопроса.</param>
 		/// <returns>Модель вопроса.</returns>
-		Task<Question> GetQuestionAsync(Guid id);
+		Task<Question> FindAsync(Guid id);
 		/// <summary>
 		/// Ассинхронно возвращает вопросы.
 		/// </summary>
 		/// <param name="offset">Количество пропускаемых элементов.</param>
 		/// <param name="count">Количество выгружаемых элементов.</param>
 		/// <returns>Вопросы</returns>
-		Task<CollectionResult<Question>> GetQuestionsAsync(int offset, int count);
+		Task<CollectionResult<Question>> FindAsync(int offset, int count);
 	}
 }

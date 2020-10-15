@@ -8,6 +8,7 @@ namespace Website.Infrastructure.EntityConfigurations
 	/// </summary>
 	public class TeacherEntityConfiguration : PersonEntityConfiguration<Teacher>
 	{
+		///<inheritdoc/>
 		protected override void ConfigureEntity(EntityTypeBuilder<Teacher> builder)
 		{
 			builder.HasOne(x => x.Department)
