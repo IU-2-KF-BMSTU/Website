@@ -3,7 +3,6 @@ using System;
 using System.Threading.Tasks;
 using Website.Api.Models.Teachers;
 using Website.Domain;
-using Website.Domain.DataSources.Departments;
 using Website.Domain.DataSources.Teachers;
 using Website.Domain.Entities;
 using Website.Infrastructure;
@@ -11,7 +10,7 @@ using Website.Infrastructure;
 namespace Website.Api.Controllers
 {
 	/// <summary>
-	/// Представляет API для работы с кафедрой.
+	/// Представляет API для работы с преподавателями.
 	/// </summary>
 	[Route("[controller]")]
 	[ApiController]
@@ -20,7 +19,7 @@ namespace Website.Api.Controllers
 		private readonly ITeacherDataSource _teacherDataSource;
 		private readonly WebsiteDbContext _websiteDbContext;
 
-		public TeachersController(IDepartmentDataSource departmentDataSource, ITeacherDataSource teacherDataSource, WebsiteDbContext websiteDbContext)
+		public TeachersController(ITeacherDataSource teacherDataSource, WebsiteDbContext websiteDbContext)
 		{
 			_teacherDataSource = teacherDataSource ?? throw new ArgumentNullException(nameof(teacherDataSource));
 			_websiteDbContext = websiteDbContext ?? throw new ArgumentNullException(nameof(websiteDbContext));
