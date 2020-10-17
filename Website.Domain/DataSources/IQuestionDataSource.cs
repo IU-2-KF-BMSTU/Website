@@ -26,7 +26,7 @@ namespace Website.Domain.DataSources
 		/// </summary>
 		/// <param name="offset">Количество пропускаемых элементов.</param>
 		/// <param name="count">Количество выгружаемых элементов.</param>
-		/// <returns>Вопросы</returns>
+		/// <returns>Вопросы.</returns>
 		Task<CollectionResult<Question>> FindAsync(int offset, int count);
 	}
 }

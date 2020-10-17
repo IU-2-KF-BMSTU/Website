@@ -16,12 +16,12 @@ namespace Website.Api.Controllers
 	[ApiController]
 	public class QuestionsController : ControllerBase
 	{
-		private readonly IQuestionDataSource _questionRepository;
+		private readonly IQuestionDataSource _questionDataSource;
 		private readonly WebsiteDbContext _websiteDbContext;
 
-		public QuestionsController(IQuestionDataSource questionRepository, WebsiteDbContext websiteDbContext)
+		public QuestionsController(IQuestionDataSource questionDataSource, WebsiteDbContext websiteDbContext)
 		{
-			_questionRepository = questionRepository ?? throw new ArgumentNullException(nameof(questionRepository));
+			_questionDataSource = questionDataSource ?? throw new ArgumentNullException(nameof(questionDataSource));
 			_websiteDbContext = websiteDbContext ?? throw new ArgumentNullException(nameof(websiteDbContext));
 		}
 
@@ -45,7 +45,7 @@ namespace Website.Api.Controllers
 				QuestionerName = questionFm.QuestionerName,
 				Content = questionFm.Content
 			};
-			_questionRepository.Add(question);
+			_questionDataSource.Add(question);
 			return _websiteDbContext.SaveChangesAsync();
 		}
 		/// <summary>
@@ -54,13 +54,13 @@ namespace Website.Api.Controllers
 		/// <param name="questionId">Идентификатор вопроса.</param>
 		/// <returns>Модель вопроса.</returns>
 		[HttpGet("{questionId}")]
-		public Task<Question> GetQuestion(Guid questionId) => _questionRepository.FindAsync(questionId);
+		public Task<Question> GetQuestion(Guid questionId) => _questionDataSource.FindAsync(questionId);
 		/// <summary>
 		/// Возвращает вопросы.
 		/// </summary>
 		/// <param name="page">Номер страницы.</param>
 		/// <param name="count">Количество выгружаемых элементов.</param>
-		/// <returns>Вопросы</returns>
+		/// <returns>Вопросы.</returns>
 		[HttpGet]
 		public Task<CollectionResult<Question>> GetQuestions(int page = 1, int count = 10)
 		{
@@ -69,7 +69,7 @@ namespace Website.Api.Controllers
 			if (count < 0)
 				throw new ArgumentOutOfRangeException(nameof(count));
 
-			return _questionRepository.FindAsync((page - 1) * count, count);
+			return _questionDataSource.FindAsync((page - 1) * count, count);
 		}
 	}
 }

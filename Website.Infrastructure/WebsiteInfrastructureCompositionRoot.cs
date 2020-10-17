@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Website.Domain.DataSources;
 using Website.Domain.DataSources.Departments;
+using Website.Domain.DataSources.NewsDS;
 using Website.Domain.DataSources.Teachers;
 using Website.Infrastructure.DataSources;
 
@@ -30,6 +31,7 @@ namespace Website.Infrastructure
 			serviceCollection.AddScoped<IMediaContentDataSource, MediaContentDataSource>();
 			serviceCollection.AddScoped<IQuestionDataSource, QuestionDataSource>();
 			serviceCollection.AddScoped<ITeacherDataSource, TeacherDataSource>();
+			serviceCollection.AddScoped<INewsDataSource, NewsDataSource>();
 		}
 		static private void AddDatabase(this IServiceCollection serviceCollection, IConfiguration configuration)
 		{

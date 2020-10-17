@@ -29,6 +29,10 @@ namespace Website.Infrastructure
 		/// Таблица кафедр.
 		/// </summary>
 		public DbSet<Department> Departments { get; set; }
+		/// <summary>
+		/// Таблица новостей.
+		/// </summary>
+		public DbSet<News> News { get; set; }
 
 		///<inheritdoc/>
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
