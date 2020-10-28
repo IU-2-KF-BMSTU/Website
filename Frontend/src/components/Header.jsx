@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import logo from "../assets/logo.svg";
-import burger from "../assets/burger.svg";
+import logo from '../assets/logo.svg';
+import burger from '../assets/burger.svg';
 
 const Header = () => {
   return (
@@ -34,4 +34,5 @@ const LogoBlock = styled.div`
   height: 100%;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Lato', sans-serif;
 `;

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import vectorForQuestionsBlock from '../assets/vectorForQuestionsBlock.svg';
+import vectorForQuestionsBlock from '../../assets/vectorForQuestionsBlock.svg';
 
 const QuestionsBlock = () => {
   return (

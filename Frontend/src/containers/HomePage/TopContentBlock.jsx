@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Button from "@material-ui/core/Button";
-import vectorForTopHomePage from "../assets/vectorForTopHomePage.svg";
-
-const TopContentBlock = () => {
+import React from 'react';
+import styled from 'styled-components';
+import { ButtonCustom } from '../../components/Button';
+const TopContentBlock = ({ title, text, vector, buttonAction }) => {
   return (
     <Container>
       <LeftContainer>
-        <Title>Кафедра ИУ-2 ждет тебя</Title>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
-          ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore.
-        </Text>
-        <Button>Подробнее</Button>
+        <Title>{title}</Title>
+        <Text>{text}</Text>
+        {buttonAction && (
+          <ButtonCustom width={'168px'} onClick={buttonAction}>
+            Подробнее
+          </ButtonCustom>
+        )}
       </LeftContainer>
       <RightContainer>
-        <img src={vectorForTopHomePage} alt="vector" />
+        <img src={vector} alt="vector" />
       </RightContainer>
     </Container>
   );
@@ -55,8 +52,8 @@ const Title = styled.span`
   font-weight: 900;
   font-size: 64px;
   line-height: 77px;
-width: 462px;
-white-space: pre-wrap;
+  width: 462px;
+  white-space: pre-wrap;
   color: #000000;
 `;
 
@@ -66,8 +63,8 @@ const Text = styled.span`
   font-weight: 300;
   font-size: 14px;
   line-height: 17px;
-  font-feature-settings: "pnum" on, "lnum" on;
-width: 430px;
-white-space: pre-wrap;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  width: 430px;
+  white-space: pre-wrap;
   color: #000000;
 `;

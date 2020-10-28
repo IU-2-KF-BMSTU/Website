@@ -1,9 +1,8 @@
-import React from "react";
-import { Route } from "react-router-dom";
-import HomePage from "./containers/HomePage";
+import React from 'react';
+import RoutePath from './RoutePath';
 
 function App() {
-  return <Route component={HomePage} />;
+  return <RoutePath />;
 }
 
 export default App;
