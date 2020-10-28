@@ -26,7 +26,14 @@ namespace Website.Api
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddWebsiteInfrastructure(Configuration);
-			
+
+			services.AddCors(c => c.AddDefaultPolicy(builder =>
+			{
+				builder.AllowAnyOrigin()
+					   .AllowAnyHeader()
+					   .AllowAnyMethod();
+			}));
+
 			services.AddControllers(options =>
 			{
 				options.Filters.Add<ExceptionsFilter>();
