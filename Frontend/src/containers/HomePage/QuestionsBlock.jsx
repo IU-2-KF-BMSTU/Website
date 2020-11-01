@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 import vectorForQuestionsBlock from '../../assets/vectorForQuestionsBlock.svg';
+import {ButtonCustom} from "../../components/Button";
 
 const QuestionsBlock = () => {
   return (
     <Container>
       <Content>
-        <Title>Учебная деятельность</Title>
-        <Button>Напишите нам</Button>
+        <Title>Остались вопросы?</Title>
+          <ButtonCustom width={'168px'} onClick={() => console.log('click')}>
+              Напишите нам
+          </ButtonCustom>
       </Content>
       <img src={vectorForQuestionsBlock} alt="questions?" />
     </Container>
@@ -38,4 +40,5 @@ const Title = styled.span`
 
 const Content = styled.div`
   display: flex;
+  flex-direction: column;
 `;

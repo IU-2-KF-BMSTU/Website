@@ -4,14 +4,16 @@ import styled from 'styled-components';
 import logo from '../assets/logo.svg';
 import burger from '../assets/burger.svg';
 
-const Header = () => {
+const Header = ({ openMenu }) => {
   return (
     <Container>
       <LogoBlock>
         <img src={logo} alt="ИУ-2" />
         ИУ-2
       </LogoBlock>
-      <img src={burger} alt="menu" />
+      <MenuButton onClick={openMenu}>
+        <img src={burger} alt="menu" />
+      </MenuButton>
     </Container>
   );
 };
@@ -28,11 +30,25 @@ const Container = styled.div`
   border-bottom: 1px solid rgba(174, 174, 174, 0.4);
 `;
 
+const MenuButton = styled.div`
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 const LogoBlock = styled.div`
   display: flex;
-  width: 135px;
+  width: 100px;
   height: 100%;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Lato', sans-serif;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 29px;
+  color: #1935d8;
+  :hover {
+    cursor: pointer;
+  }
 `;

@@ -14,13 +14,15 @@ const TopContentBlock = ({ title, text, vector, buttonAction }) => {
         )}
       </LeftContainer>
       <RightContainer>
-        <img src={vector} alt="vector" />
+        <Img src={vector} alt="vector" />
       </RightContainer>
     </Container>
   );
 };
 export default TopContentBlock;
-
+const Img = styled.img`
+  height: 85%;
+`;
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -28,11 +30,12 @@ const Container = styled.div`
   height: calc(100vh - 80px);
   box-sizing: border-box;
   align-items: center;
-  padding: 16px 170px 0 105px;
+  padding: 16px 106px 0 106px;
 `;
 
 const RightContainer = styled.div`
   display: flex;
+  justify-content: flex-end;
   width: 50%;
   height: 100%;
   box-sizing: border-box;
@@ -43,6 +46,7 @@ const LeftContainer = styled.div`
   flex-direction: column;
   width: 50%;
   height: 100%;
+  justify-content: center;
   box-sizing: border-box;
 `;
 
@@ -50,11 +54,12 @@ const Title = styled.span`
   font-family: Lato;
   font-style: normal;
   font-weight: 900;
-  font-size: 64px;
-  line-height: 77px;
-  width: 462px;
+  font-size: 102px;
+  line-height: 106px;
+  width: 100%;
   white-space: pre-wrap;
   color: #000000;
+  margin-bottom: 50px;
 `;
 
 const Text = styled.span`
@@ -67,4 +72,5 @@ const Text = styled.span`
   width: 430px;
   white-space: pre-wrap;
   color: #000000;
+  margin-bottom: 50px;
 `;

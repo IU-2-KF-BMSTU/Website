@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 import { contentForBlock } from '../../sources/constants';
+import { ButtonCustom } from '../../components/Button';
+import { useHistory } from 'react-router-dom';
 
 const MiddleContentBlock = () => {
+  const history = useHistory();
+
   return (
     <Container>
       <Title>Учебная деятельность</Title>
@@ -16,7 +19,9 @@ const MiddleContentBlock = () => {
           </ContentBlock>
         ))}
       </SubContainer>
-      <Button>Подробнее</Button>
+      <ButtonCustom key='work' width={'168px'} onClick={() => history.push('/work')}>
+        Подробнее
+      </ButtonCustom>
     </Container>
   );
 };

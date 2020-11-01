@@ -2,8 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
-export const ButtonCustom = ({ width, children }) => {
-  return <ButtonWrapper width={width}>{children}</ButtonWrapper>;
+export const ButtonCustom = ({ width, children, onClick }) => {
+  return (
+    <ButtonWrapper onClick={onClick} width={width}>
+      {children}
+    </ButtonWrapper>
+  );
 };
 
 const ButtonWrapper = styled(Button)`
@@ -11,7 +15,7 @@ const ButtonWrapper = styled(Button)`
   box-sizing: border-box;
   border-radius: 24px;
   border: 2px solid #1935d8;
-  background-color: #fff;
+  background-color: transparent;
   color: #1935d8;
   min-height: 48px;
   :hover {

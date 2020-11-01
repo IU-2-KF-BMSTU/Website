@@ -20,6 +20,8 @@
     "react-dom": "16.13.1",
     "react-final-form": "6.3.5",
     "react-scripts": "3.4.1",
+    "react-swipeable-views": "0.13.9",
+    "react-swipeable-views-utils": "0.14.0-alpha.0",
     "styled-components": "5.0.1"
   },
   "scripts": {
@@ -44,7 +46,8 @@
     ]
   },
   "devDependencies": {
-    "react-router-dom": "5.2.0",
-    "prettier": "2.0.1"
+    "@material-ui/icons": "^4.9.1",
+    "prettier": "2.0.1",
+    "react-router-dom": "5.2.0"
   }
 }
