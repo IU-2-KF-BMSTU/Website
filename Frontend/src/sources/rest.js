@@ -5,6 +5,11 @@ import axios from 'axios';
 
 export const getDepartmentHead = () => axios.get(`${API_URL}Departments/Head`, { responseType: 'json' });
 
+export const getNews = (count, page) => axios.get(`${API_URL}News`, { params: { page, count }, responseType: 'json' });
+
+export const getImageForNew = (id) => axios.get(`${API_URL}MediaContents/Content`, { params: { id }, responseType: 'json', });
+
+
 export const dataTable = (start, limit, ext_id_landfill_weight, dateTo, dateFrom, transport) =>
   network.post(
     `${API_URL}?landfills`,

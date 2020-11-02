@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 `;
 
 const Img = styled.img`
-width: 100%;
+  width: 100%;
 `;
 
 const Line = styled.div`

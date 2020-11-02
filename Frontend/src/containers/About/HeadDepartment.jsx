@@ -11,7 +11,6 @@ const HeadDepartment = ({}) => {
     try {
       setLoading(true);
       const response = await getDepartmentHead();
-      console.log('resp', response.data);
       if (response.status === 200) {
         setLoading(false);
         setData({ ...response.data });

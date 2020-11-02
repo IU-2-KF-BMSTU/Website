@@ -1,8 +1,36 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
+import { getImageForNew } from '../sources/rest';
 
-export const NewsCart = ({ mode, data: { src, date, title, text } }) => {
+export const NewsCart = ({ mode, data: { src, date, title, text, imgId } }) => {
+  const [loading, setLoading] = useState(true);
+  const [picture, setPicture] = useState();
+  const [error, setError] = useState('');
+  const getDataNews = useCallback(
+    async id => {
+      try {
+        setLoading(true);
+        const response = await getImageForNew(id);
+        console.log('resp', response);
+        if (response.status === 200) {
+          setPicture({ ...response.data });
+          setLoading(false);
+        } else {
+          if (response.data.description) {
+            setError(response.data.description);
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (imgId) getDataNews(imgId);
+  }, [imgId]);
+
   return (
     <>
       {mode === 'big' ? (
