@@ -8,6 +8,7 @@
   <ItemGroup>
     <None Include="docker-compose.deploy.yml" />
     <None Include=".dockerignore" />
-    <None Include="docker-compose.yml" />
+    <None Include="docker-compose.local.yml" />
+    <None Include="redme.md" />
   </ItemGroup>
 </Project>
