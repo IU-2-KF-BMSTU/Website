@@ -1,6 +1,6 @@
 # build
 FROM node:10.15.1 AS build
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY Frontend ./
 RUN npm i
 ARG Environment=Production
@@ -9,7 +9,7 @@ RUN npm run build
 # run
 FROM nginx
 ARG Environment=Production
-RUN rm -f /etc/nginx/conf.d/default.conf
-COPY Frontend/nginxconfigs/nginx.conf /etc/nginx/conf.d/
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
+COPY Frontend/nginxconfigs/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /app
 EXPOSE 80
+EXPOSE 443

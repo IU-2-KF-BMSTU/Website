@@ -2,6 +2,7 @@ version: "3.7"
 
 volumes:
   postgres-data:
+  nginx-data:
 
 services:
     nginx-website:
@@ -13,14 +14,17 @@ services:
             max-size: "2048m"
             max-file: "3"
         ports: 
-            - "80:80"
+            - 80:80
+            - 443:443
         depends_on:
           - website-api
+        volumes:
+            - nginx-data:/nginx-data/data/ssl/
 
     website-api:
         image: docker.pkg.github.com/iu-2-kf-bmstu/website/website-api
         ports: 
-            - "25000:80"
+            - 25000:80
         restart: always
 
     database:

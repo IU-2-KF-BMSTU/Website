@@ -2,6 +2,7 @@ version: "3.7"
 
 volumes:
   postgres-data:
+  nginx-data:
 
 services:
     nginx-website:
@@ -15,9 +16,12 @@ services:
                 max-file: "3"
         ports: 
             - 80:80
+            - 443:433
         depends_on:
             - website-api
         restart: always
+        volumes:
+            - nginx-data:/nginx-data/data/ssl/
 
     website-api:
         build:
