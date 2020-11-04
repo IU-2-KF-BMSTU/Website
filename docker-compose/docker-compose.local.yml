@@ -2,13 +2,14 @@ version: "3.7"
 
 volumes:
   postgres-data:
-  nginx-data:
 
 services:
     nginx-website:
         build:
             context: ..
             dockerfile: ./Frontend/Dockerfile
+            args:
+                Environment: Development
         logging:
             driver: "json-file"
             options:
@@ -20,8 +21,6 @@ services:
         depends_on:
             - website-api
         restart: always
-        volumes:
-            - nginx-data:/nginx-data/data/ssl/
 
     website-api:
         build:

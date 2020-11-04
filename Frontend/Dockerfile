@@ -9,7 +9,7 @@ RUN npm run build
 # run
 FROM nginx
 ARG Environment=Production
-COPY Frontend/nginxconfigs/nginx.conf /etc/nginx/conf.d/default.conf
+COPY Frontend/nginxconfigs/nginx.$Environment.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /app
 EXPOSE 80
 EXPOSE 443
