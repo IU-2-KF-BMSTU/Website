@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Button from "@material-ui/core/Button";
-import { contentForBlock } from "../sources/constants";
+import React from 'react';
+import styled from 'styled-components';
+import { contentForBlock } from '../../sources/constants';
+import { ButtonCustom } from '../../components/Button';
+import { useHistory } from 'react-router-dom';
 
 const MiddleContentBlock = () => {
+  const history = useHistory();
+
   return (
     <Container>
       <Title>Учебная деятельность</Title>
       <SubContainer>
-        {contentForBlock.map((item) => (
-          <ContentBlock>
+        {contentForBlock.map((item, ind) => (
+          <ContentBlock key={`${ind}-block`}>
             <img src={item.svg} alt="" />
             <TitleBlock>{item.title}</TitleBlock>
             <TextBlock>{item.text}</TextBlock>
           </ContentBlock>
         ))}
       </SubContainer>
-      <Button>Подробнее</Button>
+      <ButtonCustom key='work' width={'168px'} onClick={() => history.push('/work')}>
+        Подробнее
+      </ButtonCustom>
     </Container>
   );
 };
@@ -31,11 +36,7 @@ const Container = styled.div`
   height: 100vh;
   box-sizing: border-box;
   padding: 104px 106px 72px 106px;
-  background: linear-gradient(
-    104.98deg,
-    rgba(23, 51, 215, 0.1),
-    rgba(0, 195, 230, 0.1)
-  );
+  background: linear-gradient(104.98deg, rgba(23, 51, 215, 0.1), rgba(0, 195, 230, 0.1));
 `;
 
 const ContentBlock = styled.div`
@@ -80,7 +81,7 @@ const TextBlock = styled.span`
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  font-feature-settings: "pnum" on, "lnum" on;
+  font-feature-settings: 'pnum' on, 'lnum' on;
   white-space: pre-wrap;
   color: #000000;
 `;

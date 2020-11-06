@@ -1,19 +1,30 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Header from "../components/Header";
-import TopContentBlock from "../containers/TopContentBlock";
-import NewsBlock from "../containers/NewsBlock";
-import MiddleContentBlock from "../containers/MiddleContentBlock";
+import React from 'react';
+import styled from 'styled-components';
+import TopContentBlock from './HomePage/TopContentBlock';
+import NewsBlock from './HomePage/NewsBlock';
+import MiddleContentBlock from './HomePage/MiddleContentBlock';
+import QuestionsBlock from './HomePage/QuestionsBlock';
+import vectorForTopHomePage from '../assets/vectorForTopHomePage.svg';
+import { useHistory } from 'react-router-dom';
 
 const HomePage = () => {
-  return (
-    <Container>
-      <Header />
-      <TopContentBlock />
-      <NewsBlock />
-      <MiddleContentBlock />
-    </Container>
-  );
+    const history = useHistory();
+
+    return (
+      <Container>
+        <TopContentBlock
+          title="Кафедра ИУ-2 ждет тебя"
+          text=" Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore."
+          vector={vectorForTopHomePage}
+          buttonAction={() => history.push('/about')}
+        />
+        <NewsBlock />
+        <MiddleContentBlock />
+        <QuestionsBlock />
+      </Container>
+    );
 };
 export default HomePage;
 
