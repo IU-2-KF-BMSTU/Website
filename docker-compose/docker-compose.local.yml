@@ -31,6 +31,8 @@ services:
         ports: 
             - 25000:80
         restart: always
+        environment:
+            DbConnectionString: ${DbConnectionString}
 
     database:
         image: postgres
@@ -38,7 +40,7 @@ services:
         volumes:
             - postgres-data:/var/lib/postgresql/data
         environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: root
+            POSTGRES_USER: ${DbUser}
+            POSTGRES_PASSWORD: ${DbPassword}
         ports:
             - 5432:5432

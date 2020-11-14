@@ -1,4 +1,4 @@
-{
+ {
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -8,25 +8,12 @@
     }
   },
   "profiles": {
-    "Website.Api": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "Website.Api - Local": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local"
-      }
-    },
-    "Website.Api - Remote": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Remote"
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "DbConnectionString": "Host=localhost;Port=5433;Username=postgres;Password=root;Database=BmstuWebsite"
       }
     }
   }

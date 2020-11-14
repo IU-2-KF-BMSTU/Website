@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using Website.Domain.DataSources;
 using Website.Domain.DataSources.Departments;
 using Website.Domain.DataSources.NewsDS;
@@ -38,7 +39,7 @@ namespace Website.Infrastructure
 			serviceCollection.AddEntityFrameworkNpgsql();
 			serviceCollection.AddDbContext<WebsiteDbContext>(options =>
 			{
-				string connectionString = configuration["Storage:ConnectionString"];
+				string connectionString = Environment.GetEnvironmentVariable("DbConnectionString");
 				string assemplyName = typeof(WebsiteDbContext).Assembly.GetName().Name;
 				options.UseNpgsql(connectionString, npgsqlOptions => { npgsqlOptions.MigrationsAssembly(assemplyName); });
 			});

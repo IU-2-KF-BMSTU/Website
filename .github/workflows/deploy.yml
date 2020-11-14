@@ -31,6 +31,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+             export DbConnectionString=${{ secrets.DbConnectionString }}
+             export DbUser=${{ secrets.DbUser }}
+             export DbPassword=${{ secrets.DbPassword }}
              docker login docker.pkg.github.com -u 11dot001001 -p ${{ secrets.LOGIN_SECRET_GITHUB }}
              docker-compose -f docker-compose.deploy.yml pull
              docker-compose -f docker-compose.deploy.yml  up -d --force-recreate --build 
