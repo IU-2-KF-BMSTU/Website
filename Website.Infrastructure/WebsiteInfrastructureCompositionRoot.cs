@@ -36,7 +36,6 @@ namespace Website.Infrastructure
 		}
 		static private void AddDatabase(this IServiceCollection serviceCollection, IConfiguration configuration)
 		{
-			Console.WriteLine(Environment.GetEnvironmentVariable("DbConnectionString"));
 			serviceCollection.AddEntityFrameworkNpgsql();
 			serviceCollection.AddDbContext<WebsiteDbContext>(options =>
 			{
